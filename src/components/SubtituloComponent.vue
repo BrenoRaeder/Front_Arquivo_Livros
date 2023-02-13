@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 div {
-  margin: 40px auto;
+  margin: 60px auto;
   width: 95vw;
   display: flex;
   justify-content: center;
@@ -26,6 +26,7 @@ div {
 
 h2 {
   margin: 0 10px;
+  text-align: center;
 }
 
 span {

@@ -1,21 +1,55 @@
 <template>
-  <h1>novo livro</h1>
-  <div>
-    <label>Título</label>
-    <input type="text" v-model="livro.titulo" />
-    <label>Começou</label>
-    <input type="date" v-model="livro.dataInicio" />
-    <label>Terminou</label>
-    <input type="date" v-model="livro.dataTermino" />
-    <label>Páginas</label>
-    <input type="number" v-model="livro.quantidadePaginas" />
-    <label>Imagem (link)</label>
-    <input type="text" v-model="livro.imagem" />
-    <button @click="salvarLivro">Salvar</button>
-  </div>
+  <SubtituloComponent titulo="Novo Livro"></SubtituloComponent>
+  <v-form ref="form" class="form">
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-text-field v-model="livro.titulo" label="Título"></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="2">
+          <v-text-field
+            v-model="livro.paginas"
+            label="Páginas"
+            type="number"
+            cols="6"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="10">
+          <v-text-field
+            v-model="livro.imagem"
+            label="Imagem (link)"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-row>
+        <v-col cols="6">
+          <v-text-field
+            v-model="livro.dataInicio"
+            label="Data de Início"
+            type="date"
+          ></v-text-field>
+        </v-col>
+        <v-col md="6">
+          <v-text-field
+            v-model="livro.dataTermino"
+            label="Data de Término"
+            type="date"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-container>
+    <div class="container-btn">
+      <button type="submit" @click="salvarLivro">Salvar</button>
+    </div>
+  </v-form>
 </template>
 
 <script>
+import SubtituloComponent from "@/components/SubtituloComponent.vue";
 import Livro from "../services/livros.js";
 export default {
   data() {
@@ -41,12 +75,28 @@ export default {
         });
     },
   },
+  components: { SubtituloComponent },
 };
 </script>
 
-<style>
-div {
+<style scoped>
+.container-btn {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  width: 90vw;
+  margin: auto;
+}
+
+button {
+  color: var(--branco);
+  background: var(--preto);
+  padding: 5px 10px;
+  transition: 0.6s;
+  font-weight: bold;
+}
+
+button:hover {
+  color: var(--preto);
+  background: #95dd95;
 }
 </style>

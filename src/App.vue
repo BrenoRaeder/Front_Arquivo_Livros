@@ -28,6 +28,7 @@ nav {
   background: #eceaea;
   box-shadow: 0px 0px 10px #3f3f3f;
   position: fixed;
+  top: 0;
   z-index: 2;
   display: flex;
   justify-content: flex-end;
