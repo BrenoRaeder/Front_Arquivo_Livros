@@ -1,7 +1,8 @@
 <template>
-  <div class="lista" v-for="autor in autores" :key="autor.id">
-    <p>{{ autor.nome }}</p>
-    <p>{{ autor.id }}</p>
+  <Subtitulo titulo="Autores"></Subtitulo>
+  <div class="lista" v-for="autor in autores" :key="autor.idAutor">
+    <p>{{ autor.idAutor }} - {{ autor.nome }}</p>
+    <div class="excluir" @click="excluir(autor.idAutor)">x</div>
   </div>
   <v-form class="form" @submit.prevent>
     <v-text-field label="nome" v-model="autor.nome"></v-text-field>
@@ -11,6 +12,7 @@
 
 <script>
 import Autores from "../services/autores.js";
+import Subtitulo from "@/components/SubtituloComponent.vue";
 export default {
   data() {
     return {
@@ -19,6 +21,9 @@ export default {
         nome: "",
       },
     };
+  },
+  components: {
+    Subtitulo,
   },
   created() {
     Autores.listar().then((response) => {
@@ -30,9 +35,20 @@ export default {
       Autores.salvar(this.autor)
         .then(() => {
           alert("Salvo com sucesso");
+          window.location.reload();
         })
         .catch((error) => {
           alert(error);
+          console.log(error);
+        });
+    },
+    excluir(id) {
+      Autores.deletar(id)
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((error) => {
+          alert("Deu pau :(");
           console.log(error);
         });
     },
@@ -42,10 +58,26 @@ export default {
 
 <style scoped>
 .lista {
-  margin: 100px auto 0 auto;
+  margin: 5px auto 0 auto;
   border: 1px solid var(--preto);
   padding: 20px;
   width: 30vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.excluir {
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 1px 8px;
+  font-weight: bold;
+  color: var(--preto);
+  transition: 0.3s;
+}
+
+.excluir:hover {
+  background: #c56b6b;
+  color: #fff;
 }
 
 .form {

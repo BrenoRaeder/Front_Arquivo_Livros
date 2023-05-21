@@ -4,13 +4,16 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-text-field v-model="livro.titulo" label="Título"></v-text-field>
+          <v-text-field
+            v-model="livroSalvar.titulo"
+            label="Título"
+          ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="2">
           <v-text-field
-            v-model="livro.quantidadePaginas"
+            v-model="livroSalvar.qtdPaginas"
             label="Páginas"
             type="number"
             cols="6"
@@ -18,17 +21,24 @@
         </v-col>
         <v-col cols="10">
           <v-text-field
-            v-model="livro.imagem"
+            v-model="livroSalvar.imgCapa"
             label="Imagem (link)"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="6">
-          <v-text-field v-model="livro.autor" label="Autor"></v-text-field>
+          <v-autocomplete
+            :items="autores"
+            v-model="livroSalvar.autor.idAutor"
+            label="Autor"
+          ></v-autocomplete>
         </v-col>
         <v-col cols="6">
-          <v-text-field v-model="livro.genero" label="Genêro"></v-text-field>
+          <v-text-field
+            v-model="livroSalvar.genero"
+            label="Genêro"
+          ></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -36,14 +46,14 @@
       <v-row>
         <v-col cols="6">
           <v-text-field
-            v-model="livro.dataInicio"
+            v-model="livroSalvar.dataInicio"
             label="Data de Início"
             type="date"
           ></v-text-field>
         </v-col>
         <v-col md="6">
           <v-text-field
-            v-model="livro.dataTermino"
+            v-model="livroSalvar.dataTermino"
             label="Data de Término"
             type="date"
           ></v-text-field>
@@ -60,23 +70,62 @@
 <script>
 import { mapState } from "vuex";
 import Livro from "../services/livros.js";
+import Autor from "../services/autores.js";
 import SubtituloComponent from "../components/SubtituloComponent.vue";
 export default {
   computed: mapState({
     livro: "livro",
   }),
+  data() {
+    return {
+      autores: [],
+      livroSalvar: {
+        idLivro: null,
+        titulo: null,
+        dataInicio: null,
+        dataTermino: null,
+        qtdPaginas: 0,
+        imgCapa: "",
+        // genero: "",
+        autor: {
+          idAutor: null,
+        },
+      },
+    };
+  },
+  created() {
+    Autor.listar().then((response) => {
+      response.data.forEach((a) => {
+        this.autores.push(a.idAutor + " - " + a.nome);
+      });
+    });
+    //passando os dados por causa do autorDTO
+    this.livroSalvar.idLivro = this.livro.idLivro;
+    this.livroSalvar.titulo = this.livro.titulo;
+    this.livroSalvar.dataInicio = this.livro.dataInicio.substring(0, 10);
+    this.livroSalvar.dataTermino = this.livro.dataTermino.substring(0, 10);
+    this.livroSalvar.qtdPaginas = this.livro.qtdPaginas;
+    this.livroSalvar.imgCapa = this.livro.imgCapa;
+    this.livroSalvar.genero = this.livro.genero;
+    this.livroSalvar.autor.idAutor = this.livro.autorDTO.idAutor.toString();
+  },
   components: {
     SubtituloComponent,
   },
   methods: {
     atualizarLivro() {
-      Livro.atualizar(this.livro)
+      this.livroSalvar.autor.idAutor = this.livroSalvar.autor.idAutor.substring(
+        0,
+        1
+      );
+      Livro.atualizar(this.livroSalvar)
         .then(() => {
           alert("Atualizado com sucesso");
           this.$router.push("/");
         })
         .catch((error) => {
-          alert("Deu pau :(");
+          // alert("Deu pau :(");
+          this.$router.push("/");
           console.log(error);
         });
     },

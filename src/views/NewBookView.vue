@@ -27,7 +27,8 @@
         <v-col cols="6">
           <v-autocomplete
             :items="autores"
-            v-model="idNomeAutor"
+            v-model="livro.autor.idAutor"
+            label="Autor"
           ></v-autocomplete>
         </v-col>
         <v-col cols="6">
@@ -62,12 +63,12 @@
 
 <script>
 import SubtituloComponent from "@/components/SubtituloComponent.vue";
-// import Livro from "../services/livros.js";
+import Livro from "../services/livros.js";
 import Autor from "../services/autores.js";
 export default {
   data() {
     return {
-      idNomeAutor: 1,
+      autores: [],
       livro: {
         titulo: "",
         dataInicio: null,
@@ -76,10 +77,9 @@ export default {
         imgCapa: "",
         // genero: "",
         autor: {
-          idAutor: this.idNomeAutor,
+          idAutor: null,
         },
       },
-      autores: [],
     };
   },
   created() {
@@ -91,16 +91,16 @@ export default {
   },
   methods: {
     salvarLivro() {
-      // Livro.salvar(this.livro)
-      //   .then(() => {
-      //     alert("Salvo com sucesso");
-      //     this.$router.push("/");
-      //   })
-      //   .catch((error) => {
-      //     alert("Deu pau :(");
-      //     console.log(error);
-      //   });
-      console.log(this.livro.autor);
+      this.livro.autor.idAutor = this.livro.autor.idAutor.substring(0, 1);
+      Livro.salvar(this.livro)
+        .then(() => {
+          alert("Salvo com sucesso");
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          alert("Deu pau :(");
+          console.log(error);
+        });
     },
   },
   components: { SubtituloComponent },
