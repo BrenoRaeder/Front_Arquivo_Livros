@@ -1,10 +1,17 @@
 <template>
-  <v-dialog v-model="dialog" width="auto">
-    <LivroDetails :livro="livro"></LivroDetails>
+  <v-dialog v-model="dialog" class="dialog" width="auto">
+    <div class="dialog-container">
+      <span @click="dialog = false">x</span>
+      <LivroDetails :livro="livro"></LivroDetails>
+      <div class="buttons-dialog">
+        <button @click="editar">Editar</button>
+        <button @click="deletar">Deletar</button>
+      </div>
+    </div>
   </v-dialog>
   <div class="chart">
     <img
-      :src="livro.imagem"
+      :src="livro.imgCapa"
       class="chart-capa"
       alt="Capa do livro"
       @click="dialog = true"
@@ -53,6 +60,48 @@ export default {
 </script>
 
 <style scoped>
+.dialog-container {
+  background: var(--branco);
+  box-shadow: 1px 1px 10px var(--preto);
+  padding: 50px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80vw;
+  height: 85vh;
+}
+
+span {
+  width: 100%;
+  font-size: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.buttons-dialog {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.buttons-dialog button {
+  margin: 10px;
+  background: var(--preto);
+  color: var(--branco);
+  transition: 0.6s;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+button:hover {
+  background: var(--branco);
+  color: var(--preto);
+}
+
 li {
   list-style: none;
   width: 90vw;

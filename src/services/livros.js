@@ -2,15 +2,15 @@ import { http } from "./config";
 
 export default {
   listar: () => {
-    return http.get("/livros");
+    return http.get("/livros/dto");
   },
-  salvar: (produto) => {
-    return http.post("/livro", produto);
+  salvar: (livro) => {
+    return http.post("/livros", livro);
   },
-  atualizar: (produto) => {
-    return http.put("/livro", produto);
+  atualizar: (livro) => {
+    return http.put("/livros", livro);
   },
-  deletar: (produto) => {
-    return http.delete("/livro", { data: produto });
+  deletar: (livro) => {
+    return http.delete("/livros", { data: livro });
   },
 };

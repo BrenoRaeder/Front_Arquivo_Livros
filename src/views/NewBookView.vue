@@ -1,6 +1,6 @@
 <template>
   <SubtituloComponent titulo="Novo Livro"></SubtituloComponent>
-  <v-form ref="form" class="form">
+  <v-form ref="form" class="form" @submit.prevent>
     <v-container>
       <v-row>
         <v-col>
@@ -10,7 +10,7 @@
       <v-row>
         <v-col cols="2">
           <v-text-field
-            v-model="livro.paginas"
+            v-model="livro.qtdPaginas"
             label="Páginas"
             type="number"
             cols="6"
@@ -18,9 +18,20 @@
         </v-col>
         <v-col cols="10">
           <v-text-field
-            v-model="livro.imagem"
+            v-model="livro.imgCapa"
             label="Imagem (link)"
           ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="6">
+          <v-autocomplete
+            :items="autores"
+            v-model="idNomeAutor"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="6">
+          <v-text-field v-model="livro.genero" label="Genêro"></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -43,36 +54,53 @@
       </v-row>
     </v-container>
     <div class="container-btn">
-      <button type="submit" @click="salvarLivro">Salvar</button>
+      <button @click="salvarLivro" class="btn-salvar">Salvar</button>
+      <button @click="cancelar" class="btn-cancelar">Cancelar</button>
     </div>
   </v-form>
 </template>
 
 <script>
 import SubtituloComponent from "@/components/SubtituloComponent.vue";
-import Livro from "../services/livros.js";
+// import Livro from "../services/livros.js";
+import Autor from "../services/autores.js";
 export default {
   data() {
     return {
+      idNomeAutor: 1,
       livro: {
         titulo: "",
         dataInicio: null,
         dataTermino: null,
-        quantidadePaginas: 0,
-        imagem: "",
+        qtdPaginas: 0,
+        imgCapa: "",
+        // genero: "",
+        autor: {
+          idAutor: this.idNomeAutor,
+        },
       },
+      autores: [],
     };
+  },
+  created() {
+    Autor.listar().then((response) => {
+      response.data.forEach((a) => {
+        this.autores.push(a.idAutor + " - " + a.nome);
+      });
+    });
   },
   methods: {
     salvarLivro() {
-      Livro.salvar(this.livro)
-        .then(() => {
-          alert("Salvo com sucesso");
-        })
-        .catch((error) => {
-          alert("Deu pau :(");
-          console.log(error);
-        });
+      // Livro.salvar(this.livro)
+      //   .then(() => {
+      //     alert("Salvo com sucesso");
+      //     this.$router.push("/");
+      //   })
+      //   .catch((error) => {
+      //     alert("Deu pau :(");
+      //     console.log(error);
+      //   });
+      console.log(this.livro.autor);
     },
   },
   components: { SubtituloComponent },
@@ -93,10 +121,16 @@ button {
   padding: 5px 10px;
   transition: 0.6s;
   font-weight: bold;
+  margin: 0 5px;
 }
 
-button:hover {
+.btn-salvar:hover {
   color: var(--preto);
-  background: #95dd95;
+  background: var(--verde);
+}
+
+.btn-cancelar:hover {
+  color: var(--preto);
+  background: #c56b6b;
 }
 </style>

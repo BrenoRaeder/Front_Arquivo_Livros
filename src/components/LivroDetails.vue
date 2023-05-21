@@ -5,7 +5,9 @@
       <p><span>Titulo:</span> {{ livro.titulo }}</p>
       <p><span>Começou:</span> {{ livro.dataInicio }}</p>
       <p><span>Terminou:</span> {{ livro.dataTermino }}</p>
-      <p><span>Nº páginas:</span> {{ livro.quantidadePaginas }}</p>
+      <p><span>Nº páginas:</span> {{ livro.qtdPaginas }}</p>
+      <p><span>Autor:</span> {{ livro.autorDTO.nome }}</p>
+      <p><span>Gênero:</span> {{ livro.genero }}</p>
     </div>
   </div>
 </template>
@@ -20,14 +22,9 @@ export default {
 
 <style scoped>
 .details-container {
-  background: var(--branco);
-  box-shadow: 1px 1px 10px var(--preto);
-  padding: 50px;
-  border-radius: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 80vw;
 }
 
 img {

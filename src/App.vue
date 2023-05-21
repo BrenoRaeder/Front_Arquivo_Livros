@@ -3,6 +3,7 @@
     <div class="nav-bar">
       <router-link class="link" to="/">Home</router-link>
       <router-link class="link" to="/cadastro">Cadastro</router-link>
+      <router-link class="link" to="/cadastro-autor">Novo Autor</router-link>
     </div>
   </nav>
   <router-view />
@@ -13,6 +14,7 @@
   --branco: #e6e6e6;
   --preto: #1d1c1c;
   --vermelho: #5a0626;
+  --verde: #95dd95;
 }
 
 body {
@@ -35,7 +37,7 @@ nav {
 }
 
 .nav-bar {
-  width: 200px;
+  width: 300px;
   display: flex;
   justify-content: space-around;
   align-items: center;

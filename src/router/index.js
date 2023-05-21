@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import NewBookView from "../views/NewBookView.vue";
 import UpdateBookView from "../views/UpdateBookView.vue";
+import NewWriterView from "../views/NewWriterView.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/atualizacao",
     name: "atualizacao",
     component: UpdateBookView,
+  },
+  {
+    path: "/cadastro-autor",
+    name: "cadastro-autor",
+    component: NewWriterView,
   },
 ];
 

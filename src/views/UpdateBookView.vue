@@ -1,6 +1,6 @@
 <template>
   <SubtituloComponent titulo="Editar Livro"></SubtituloComponent>
-  <v-form ref="form" class="form">
+  <v-form ref="form" class="form" @submit.prevent>
     <v-container>
       <v-row>
         <v-col>
@@ -10,7 +10,7 @@
       <v-row>
         <v-col cols="2">
           <v-text-field
-            v-model="livro.paginas"
+            v-model="livro.quantidadePaginas"
             label="Páginas"
             type="number"
             cols="6"
@@ -21,6 +21,14 @@
             v-model="livro.imagem"
             label="Imagem (link)"
           ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="6">
+          <v-text-field v-model="livro.autor" label="Autor"></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-text-field v-model="livro.genero" label="Genêro"></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -43,7 +51,8 @@
       </v-row>
     </v-container>
     <div class="container-btn">
-      <button type="submit" @click="salvarLivro">Salvar</button>
+      <button @click="atualizarLivro" class="btn-salvar">Salvar</button>
+      <button @click="cancelar" class="btn-cancelar">Cancelar</button>
     </div>
   </v-form>
 </template>
@@ -71,6 +80,9 @@ export default {
           console.log(error);
         });
     },
+    cancelar() {
+      this.$router.push("/");
+    },
   },
 };
 </script>
@@ -89,10 +101,16 @@ button {
   padding: 5px 10px;
   transition: 0.6s;
   font-weight: bold;
+  margin: 0 5px;
 }
 
-button:hover {
+.btn-salvar:hover {
   color: var(--preto);
-  background: #95dd95;
+  background: var(--verde);
+}
+
+.btn-cancelar:hover {
+  color: var(--preto);
+  background: #c56b6b;
 }
 </style>
