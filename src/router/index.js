@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import NewBookView from "../views/NewBookView.vue";
 import UpdateBookView from "../views/UpdateBookView.vue";
 import NewWriterView from "../views/NewWriterView.vue";
+import NewGenreView from "../views/NewGenreView.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/cadastro-autor",
     name: "cadastro-autor",
     component: NewWriterView,
+  },
+  {
+    path: "/cadastro-genero",
+    name: "cadastro-genero",
+    component: NewGenreView,
   },
 ];
 

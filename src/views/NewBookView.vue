@@ -32,7 +32,11 @@
           ></v-autocomplete>
         </v-col>
         <v-col cols="6">
-          <v-text-field v-model="livro.genero" label="Genêro"></v-text-field>
+          <v-autocomplete
+            :items="generos"
+            v-model="livro.genero.idGenero"
+            label="Gênero"
+          ></v-autocomplete>
         </v-col>
       </v-row>
     </v-container>
@@ -65,9 +69,11 @@
 import SubtituloComponent from "@/components/SubtituloComponent.vue";
 import Livro from "../services/livros.js";
 import Autor from "../services/autores.js";
+import Genero from "../services/generos.js";
 export default {
   data() {
     return {
+      generos: [],
       autores: [],
       livro: {
         titulo: "",
@@ -75,7 +81,9 @@ export default {
         dataTermino: null,
         qtdPaginas: 0,
         imgCapa: "",
-        // genero: "",
+        genero: {
+          idGenero: null,
+        },
         autor: {
           idAutor: null,
         },
@@ -85,13 +93,19 @@ export default {
   created() {
     Autor.listar().then((response) => {
       response.data.forEach((a) => {
-        this.autores.push(a.idAutor + " - " + a.nome);
+        this.autores.push(a.idAutor + "  - " + a.nome);
+      });
+    });
+    Genero.listar().then((response) => {
+      response.data.forEach((a) => {
+        this.generos.push(a.idGenero + "  - " + a.nome);
       });
     });
   },
   methods: {
     salvarLivro() {
-      this.livro.autor.idAutor = this.livro.autor.idAutor.substring(0, 1);
+      this.livro.autor.idAutor = this.livro.autor.idAutor.substring(0, 3);
+      this.livro.genero.idGenero = this.livro.genero.idGenero.substring(0, 3);
       Livro.salvar(this.livro)
         .then(() => {
           alert("Salvo com sucesso");

@@ -35,10 +35,11 @@
           ></v-autocomplete>
         </v-col>
         <v-col cols="6">
-          <v-text-field
-            v-model="livroSalvar.genero"
-            label="Genêro"
-          ></v-text-field>
+          <v-autocomplete
+            :items="generos"
+            v-model="livroSalvar.genero.idGenero"
+            label="Gênero"
+          ></v-autocomplete>
         </v-col>
       </v-row>
     </v-container>
@@ -71,6 +72,7 @@
 import { mapState } from "vuex";
 import Livro from "../services/livros.js";
 import Autor from "../services/autores.js";
+import Genero from "../services/generos.js";
 import SubtituloComponent from "../components/SubtituloComponent.vue";
 export default {
   computed: mapState({
@@ -78,6 +80,7 @@ export default {
   }),
   data() {
     return {
+      generos: [],
       autores: [],
       livroSalvar: {
         idLivro: null,
@@ -86,7 +89,9 @@ export default {
         dataTermino: null,
         qtdPaginas: 0,
         imgCapa: "",
-        // genero: "",
+        genero: {
+          idGenero: null,
+        },
         autor: {
           idAutor: null,
         },
@@ -96,7 +101,12 @@ export default {
   created() {
     Autor.listar().then((response) => {
       response.data.forEach((a) => {
-        this.autores.push(a.idAutor + " - " + a.nome);
+        this.autores.push(a.idAutor + "  - " + a.nome);
+      });
+    });
+    Genero.listar().then((response) => {
+      response.data.forEach((a) => {
+        this.generos.push(a.idGenero + "  - " + a.nome);
       });
     });
     //passando os dados por causa do autorDTO
@@ -106,7 +116,7 @@ export default {
     this.livroSalvar.dataTermino = this.livro.dataTermino.substring(0, 10);
     this.livroSalvar.qtdPaginas = this.livro.qtdPaginas;
     this.livroSalvar.imgCapa = this.livro.imgCapa;
-    this.livroSalvar.genero = this.livro.genero;
+    this.livroSalvar.genero.idGenero = this.livro.generoDTO.idGenero.toString();
     this.livroSalvar.autor.idAutor = this.livro.autorDTO.idAutor.toString();
   },
   components: {
@@ -116,8 +126,10 @@ export default {
     atualizarLivro() {
       this.livroSalvar.autor.idAutor = this.livroSalvar.autor.idAutor.substring(
         0,
-        1
+        3
       );
+      this.livroSalvar.genero.idGenero =
+        this.livroSalvar.genero.idGenero.substring(0, 3);
       Livro.atualizar(this.livroSalvar)
         .then(() => {
           alert("Atualizado com sucesso");

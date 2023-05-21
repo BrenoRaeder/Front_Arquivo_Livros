@@ -69,7 +69,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   width: 80vw;
-  height: 85vh;
+  height: 95vh;
 }
 
 span {

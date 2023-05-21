@@ -63,6 +63,7 @@ h1 {
 ul {
   display: grid;
   grid-template-columns: auto auto auto;
+  align-items: center;
   width: 85vw;
   margin: 0 auto;
 }
@@ -72,6 +73,8 @@ footer {
   background: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9vayUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80");
   background-attachment: fixed;
   background-position-y: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
   margin-top: 100px;
 }
 </style>

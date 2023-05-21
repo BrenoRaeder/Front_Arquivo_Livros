@@ -2,8 +2,9 @@
   <nav>
     <div class="nav-bar">
       <router-link class="link" to="/">Home</router-link>
-      <router-link class="link" to="/cadastro">Cadastro</router-link>
+      <router-link class="link" to="/cadastro">Novo Livro</router-link>
       <router-link class="link" to="/cadastro-autor">Novo Autor</router-link>
+      <router-link class="link" to="/cadastro-genero">Novo Gênero</router-link>
     </div>
   </nav>
   <router-view />
@@ -13,7 +14,7 @@
 :root {
   --branco: #e6e6e6;
   --preto: #1d1c1c;
-  --vermelho: #5a0626;
+  --vermelho: #5c1933;
   --verde: #95dd95;
 }
 
@@ -37,7 +38,7 @@ nav {
 }
 
 .nav-bar {
-  width: 300px;
+  width: 450px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -47,10 +48,13 @@ nav {
 .link {
   text-decoration: none;
   color: var(--preto);
-  transition: 0.3s;
+  padding: 3px;
+  cursor: pointer;
+  transition: 0.5s;
 }
 
 .link:hover {
-  color: var(--vermelho);
+  background: var(--preto);
+  color: #fff;
 }
 </style>
